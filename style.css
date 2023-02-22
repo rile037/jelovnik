@@ -272,6 +272,9 @@ background-color: rgba(0,0,0,0.4);
   #pretraga input{
     width: 250px;
   }
+  .styled-table{
+    width:  550px;
+  }
   .row{
     display: block;
     align-items: center;
@@ -287,7 +290,7 @@ background-color: rgba(0,0,0,0.4);
     height: auto;
   }
   .styled-table{
-    width: 350px;
+    width:  50px;
     margin-left: 10px;
     margin-right: 10px;
   }

@@ -22,9 +22,8 @@ while ($row = $result -> fetch_assoc()){
     <tr>
       <th>".$row['id_korisnika']." - ".$row['ime_prezime']."</th>
       <th style='text-align: right; padding-right: 20px;'>
-      <form id='izmeni_korisnika'>
-      <a value='".$row['id_korisnika']."' href='' id='izmeniKorisnika'>Izmeni</a>
-      </form></th>
+      <a href='#' onclick='izmeniKorisnika(this)' data-post_id='".$row['id_korisnika']."' id='izmeniKorisnika'>Izmeni</a>
+      </th>
     </tr>
   </thead>
   <tbody>

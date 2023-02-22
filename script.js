@@ -65,7 +65,22 @@ window.onclick = function(event) {
 
 });
 
-
+function izmeniKorisnika(el){
+  let id = el.getAttribute("data-post_id");
+  
+  $.ajax({
+    type: "GET",
+    url: "ajax/admin/get_obrok_zaposlenog.php",
+    dataType: "html",
+    data: {id: id},
+    success: function(response){
+      
+      text2.innerHTML = response;
+      izmeni_korisnika_model.style.display = "block";
+    }
+  });
+  
+}
 
 
 $(document).ready(function () {
@@ -79,23 +94,9 @@ $.ajax({
   dataType: "html",
   success: function(response){
     adminSection.innerHTML = response;
-    document.getElementById("izmeniKorisnika").onclick = function() {
-      var id = document.getElementById('izmeniKorisnika').value;
-      var submit = document.getElementById("izmeni_korisnika");
-      $(submit).on('click', function(e) {
-        e.preventDefault();
-        alert(id);
-        /*$.ajax({
-          type: "get",
-          url: "ajax/admin/get_obrok_zaposlenog.php",
-          dataType: "html",
-          success: function(response){
-            alert(response);
-          }
-        });*/
-        text2.innerHTML = 
-        izmeni_korisnika_model.style.display = "block";
-      });
+    var id = document.getElementsByName("izmeniKorisnika");
+    id.onclick = function() {
+      izmeniKorisnika(id);
   }
   
     $('#pretrazi_korisnika').on('submit', function(e) {
