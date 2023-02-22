@@ -21,7 +21,10 @@ while ($row = $result -> fetch_assoc()){
   <thead>
     <tr>
       <th>".$row['id_korisnika']." - ".$row['ime_prezime']."</th>
-      <th></th>
+      <th style='text-align: right; padding-right: 20px;'>
+      <form id='izmeni_korisnika'>
+      <a value='".$row['id_korisnika']."' href='' id='izmeniKorisnika'>Izmeni</a>
+      </form></th>
     </tr>
   </thead>
   <tbody>

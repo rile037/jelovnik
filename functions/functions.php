@@ -2,6 +2,7 @@
 function display_message(){
   if(isset($_SESSION['message'])){
     echo $_SESSION['message'];
+    $_SESSION['message'] = " ";
   }
 }
 function set_message($message){
@@ -12,7 +13,9 @@ function set_message($message){
   }
 }
 
-
+function clear_message($message){
+  $message = " ";
+}
 
 /*function check_jelovnik(){
 
@@ -70,6 +73,7 @@ function upisi_jelovnik(){
   $html = "<p>Uspesno ste izabrali <a href='index.php'> jelovnik </a> za iducu nedelju.</p>";
   set_message($html);
   redirect('dodaj_jelo.php');
+  clear_message();
 
 }
 }

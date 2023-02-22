@@ -1,7 +1,9 @@
 var modal;
 var span;
+var span2;
 var text;
-
+var text2;
+var izmeni_korisnika_model;
 
 let sveKolone = [
   "kolonaPon",
@@ -16,14 +18,6 @@ let izabrana_jela = [];
 
 var adminSection = "";
 
-window.onbeforeunload = function(){
-  $.ajax({
-    url: "ajax/clear.php",
-  });
-
-  };
-
-
 function preventScroll(e){
   e.preventDefault();
   e.stopPropagation();
@@ -34,13 +28,22 @@ function preventScroll(e){
 
 
 $(document).ready(function () {
+
+
+
+
+
 text = document.getElementById('search-result');
+text2 = document.getElementById('search-result2');
 
 modal = document.getElementById("myModal");
+izmeni_korisnika_model = document.getElementById("izmeni_korisnika_modal");
+
 
 // Get the button that opens the modal
 // Get the <span> element that closes the modal
 span = document.getElementsByClassName("close")[0];
+span2 = document.getElementById("close2");
 
 // When the user clicks on <span> (x), close the modal
 
@@ -48,6 +51,15 @@ span = document.getElementsByClassName("close")[0];
 window.onclick = function(event) {
   if (event.target == modal) {
     modal.style.display = "none";
+  }
+  if (event.target == izmeni_korisnika_model) {
+    izmeni_korisnika_model.style.display = "none";
+  }
+  if(event.target == span){
+    modal.style.display = "none";
+  }
+  if(event.target == span2){
+    izmeni_korisnika_model.style.display = "none";
   }
 }
 
@@ -67,6 +79,25 @@ $.ajax({
   dataType: "html",
   success: function(response){
     adminSection.innerHTML = response;
+    document.getElementById("izmeniKorisnika").onclick = function() {
+      var id = document.getElementById('izmeniKorisnika').value;
+      var submit = document.getElementById("izmeni_korisnika");
+      $(submit).on('click', function(e) {
+        e.preventDefault();
+        alert(id);
+        /*$.ajax({
+          type: "get",
+          url: "ajax/admin/get_obrok_zaposlenog.php",
+          dataType: "html",
+          success: function(response){
+            alert(response);
+          }
+        });*/
+        text2.innerHTML = 
+        izmeni_korisnika_model.style.display = "block";
+      });
+  }
+  
     $('#pretrazi_korisnika').on('submit', function(e) {
       e.preventDefault();
       $.ajax({

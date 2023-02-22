@@ -45,6 +45,18 @@ user_restriction();
 
 </div>
 
+
+<div id="izmeni_korisnika_modal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span id='close2' class="close">&times;</span>
+    <div id="search-result2">empty</div>
+    <div class='center'>
+</div>
+  </div>
+
+</div>
 <div class="center">
   <div id="section" >
     Empty
