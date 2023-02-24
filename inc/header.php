@@ -27,6 +27,7 @@ include "functions/init.php";
 
 <link rel="stylesheet" href="bootstrap.css" />
     <link rel="stylesheet" href="style.css" />
+    <link rel="icon" type='image/png' sizes="57x57" href='../assets/logo.png'>
     <script src="script.js"></script>
     
   <nav class="navbar navbar-expand-lg">

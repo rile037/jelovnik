@@ -174,7 +174,7 @@ function validate_user_login()
             if (user_login($email, $password)) {
                 redirect('index.php');
             } else {
-                $errors[] = "- Pogresni podaci za prijavljivanje, pokusajte ponovo.";
+                $errors[] = "Pogresni podaci za prijavljivanje, pokusajte ponovo.";
             }
         }
         if (!empty($errors)) {
@@ -209,14 +209,16 @@ function user_login($email, $password)
     }
 }
 
-function create_user($ime_prezime, $email, $pozicija, $password){
-  $ime_prezime = escape($ime_prezime);
+function create_user($email, $password, $ime_prezime, $pozicija){
   $email = escape($email);
-  $pozicija = escape($pozicija);
   $password = escape($password);
   $password = password_hash($password, PASSWORD_DEFAULT);
-  $sql = "INSERT INTO korisnik(ime_prezime, email, pozicija, password, ponedeljak, utorak, sreda, cetvrtak, petak)";
-  $sql .= "VALUES('$ime_prezime', '$email', '$pozicija', '$password', 'none', 'none', 'none', 'none', 'none')";
+
+  $ime_prezime = escape($ime_prezime);
+  $pozicija = escape($pozicija);
+  
+  $sql = "INSERT INTO korisnik(email, password, ime_prezime, pozicija, isAdmin, izabranoJelo, ponedeljak, utorak, sreda, cetvrtak, petak)";
+  $sql .= "VALUES('$email', '$password', '$ime_prezime', '$pozicija', 0, 0 ,'none', 'none', 'none', 'none', 'none')";
 
   confirm(query($sql));
   set_message("Uspesno ste se registrovali!");
@@ -333,8 +335,10 @@ function get_jelo(){
       $pet = $row['petak'];
       $korisnik = $row['ime_prezime'];
       echo "
-      <table class='styled-table'>
-    <thead>
+      <table class='styled-table'>";
+      echo "<div class='center'><h2>".date("d-m-Y", strtotime('monday this week')),  " - ";   
+echo date("d-m-Y", strtotime('sunday this week')), "\n</h2></div>";
+    echo "<thead>
         <tr>
             <th>Dan</th>
             <th>Jelo</th>

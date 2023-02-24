@@ -28,8 +28,12 @@
 <input class='input' name='password' type='password' id='password' placeholder='Password'><br>
 <input  style='letter-spacing: 1px; 'class='btn' type='submit' value='PRIJAVA'>
 </form>
-</div>
+<br>
+<div style='color: green;'>
 <?php display_message();?>
+</div>
+
+</div>
 </div>
 
 </div>

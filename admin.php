@@ -25,12 +25,14 @@ user_restriction();
       <button class='btn' type='submit'>Izlistaj sve zaposlene</button>
       </form>
     </div>
+    <!---
     <div class="col option" id="option3">
-      <button class='btn' type='submit'">Podesavanje 2#</button>
+      <button class='btn' type='submit'"></button>
     </div>
     <div class="col option" id="option4">
       <button class='btn' type='submit'>Podesavanje 3#</button>
     </div>
+  -->
   </div>
 </div><br>
 <div id="myModal" class="modal">
@@ -43,23 +45,12 @@ user_restriction();
 </div>
   </div>
 
-</div>
 
-
-<div id="izmeni_korisnika_modal" class="modal">
-
-  <!-- Modal content -->
-  <div class="modal-content">
-    <span id='close2' class="close">&times;</span>
-    <div id="search-result2">empty</div>
-    <div class='center'>
-</div>
-  </div>
 
 </div>
 <div class="center">
   <div id="section" >
-    Empty
+    <h1>Izaberite jednu od opcija</h1>
 </div>
 
 </div>

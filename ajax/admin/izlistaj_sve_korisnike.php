@@ -21,9 +21,8 @@ while ($row = $result -> fetch_assoc()){
   <thead>
     <tr>
       <th>".$row['id_korisnika']." - ".$row['ime_prezime']."</th>
-      <th style='text-align: right; padding-right: 20px;'>
-      <a href='#' onclick='izmeniKorisnika(this)' data-post_id='".$row['id_korisnika']."' id='izmeniKorisnika'>Izmeni</a>
-      </th>
+      <th></th>
+    
     </tr>
   </thead>
   <tbody>
@@ -58,3 +57,8 @@ while ($row = $result -> fetch_assoc()){
 }
 
 ?>
+ 
+ <!--      <th style='text-align: right; padding-right: 20px;'>
+      <a href='#' onclick='izmeniKorisnika(this)' data-post_id='".$row['id_korisnika']."' id='izmeniKorisnika'>Izmeni</a>
+      
+      </th>->>
