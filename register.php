@@ -1,15 +1,8 @@
 <?php include('inc/header.php');
+display_message();
 login_check_pages();
 ?>
 
-
-<div>
-<?php
-display_message();
-validate_user_registration();
-
-?>
-</div>
 <html>
 <head>
   <meta charset="UTF-8" />
@@ -23,6 +16,7 @@ validate_user_registration();
     <div class='main'>
     <div class='center'>
     <div class='container' style='margin-bottom: 30px;'>
+    <?php validate_user_registration();?>
     <img id='img' src='assets/restaurant.png' width='74px' height='74px'></img>
   <p id='text'>Registrujte se<br>
    <form method="POST" id="forma">

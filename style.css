@@ -158,6 +158,7 @@ background-color: rgba(0,0,0,0.4);
 .btn{
   text-align: center;
   width: 200px;
+  margin-top: 15px;
   height: 45px;
   font-size: 20px;
   font-family: 'Anaheim', sans-serif;
@@ -167,6 +168,10 @@ background-color: rgba(0,0,0,0.4);
   border-bottom-right-radius: 8px;
   border-top-right-radius: 8px;
   border-top-left-radius: 8px;
+}
+
+.btn .jelovnik{
+  background-color: green;
 }
 
 .btn.pretrazi{
@@ -196,6 +201,37 @@ background-color: rgba(0,0,0,0.4);
   
 }
 
+
+.key{
+  padding-top: 10px;
+  padding-left: 35px;
+  text-align: left;
+}
+
+.value{
+  font-weight: bold;
+  padding-top: 10px;
+
+  text-align: left;
+}
+
+#content-tekuci, #content-iduci{
+  
+  background-color: rgba(13, 170, 91, 0.538);
+  color: white;
+  font-weight: bold;
+  padding-left: 15px;
+  padding-top: 30px;
+  padding-bottom: 15px;
+  margin-left: 15%; 
+  margin-right: 15%; 
+  z-index: -1;
+  display: none;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+
 .main {
   background-color: #1f242d;
   font-family: 'Anaheim', sans-serif;
@@ -203,7 +239,7 @@ background-color: rgba(0,0,0,0.4);
   padding-top: 50px;
   margin-left: 10%;
   margin-right: 10%;
-  height: 500px;
+  height: 1000px;
   padding-bottom: 70px;
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
@@ -221,13 +257,34 @@ background-color: rgba(0,0,0,0.4);
   width: 500px;
 }
 
+#index-jelovnik{
+  padding: 15px;
+  text-align: center;
+  background-color: white;
+  border-top-right-radius: 8px;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  margin: 15px;
+}
+
+#table-content{
+  display: block;
+  justify-content: center;
+  align-items: center;
+}
+.table-wrapper{
+  width: 280px;
+  margin: auto;
+}
+
 /*naslov-kolona*/
 .styled-table {
   border-collapse: collapse;
   margin: 25px 0;
   font-size: 20px;
   font-family: sans-serif;
-  width: 700;
+  width: 200px;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
   border-bottom-left-radius: 25px;
   border-bottom-right-radius: 25px;

@@ -28,6 +28,8 @@
 <input class='input' name='password' type='password' id='password' placeholder='Password'><br>
 <input  style='letter-spacing: 1px; 'class='btn' type='submit' value='PRIJAVA'>
 </form>
+<hr style='margin-top: 25px;'>
+<h4><a href='register.php'>Registrujte se</a></h4>
 <br>
 <div style='color: green;'>
 <?php display_message();?>

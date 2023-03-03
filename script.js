@@ -14,7 +14,8 @@ let sveKolone = [
 ];
 
 let jela = [];
-let izabrana_jela = [];
+let izabrana_tekuca_jela = [];
+let izabrana_iduca_jela = [];
 
 var adminSection = "";
 
@@ -23,6 +24,53 @@ function preventScroll(e){
   e.stopPropagation();
 
   return false;
+}
+
+function prikazi_jelovnik(id){
+  switch (id){
+    case "tekuci":
+      var content_tekuci = document.getElementById('content-tekuci');
+      var tekuci_btn = document.getElementById('tekuci');
+      tekuci_btn.scrollIntoView({ behavior: "smooth" });
+      content_tekuci.style.display = "block";
+      tekuci_btn.style.backgroundColor = "#f44336";
+      tekuci_btn.innerHTML = "Zatvori";
+      tekuci_btn.setAttribute("onclick", "javascript: zatvori_jelovnik(this.id);");
+      break;
+    case "iduci":
+      var content_iduci = document.getElementById('content-iduci')
+      var iduci_btn = document.getElementById('iduci');
+      content_iduci.style.display = "block";
+      iduci_btn.scrollIntoView({ behavior: "smooth" });
+      iduci_btn.style.backgroundColor = "#f44336";
+      iduci_btn.innerHTML = "Zatvori";
+      iduci_btn.setAttribute("onclick", "javascript: zatvori_jelovnik(this.id);");
+      break;
+}
+}
+function zatvori_jelovnik(id){
+  switch(id){
+    case "tekuci":
+      var content_tekuci = document.getElementById('content-tekuci');
+      var tekuci_btn = document.getElementById('tekuci');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      content_tekuci.style.display = "none";
+      tekuci_btn.style.backgroundColor = "rgb(10,160,110)";
+      tekuci_btn.innerHTML = "Prikaži";
+      tekuci_btn.setAttribute("onclick", "javascript: prikazi_jelovnik(this.id);");
+    break;
+    case "iduci":
+      var content_iduci = document.getElementById('content-iduci')
+      var iduci_btn = document.getElementById('iduci');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      content_iduci.style.display = "none";
+      iduci_btn.style.backgroundColor = "rgb(10,160,110)";
+      iduci_btn.innerHTML = "Prikaži";
+      iduci_btn.setAttribute("onclick", "javascript: prikazi_jelovnik(this.id);");
+    break;
+  }
+  
 }
 
 
@@ -127,7 +175,7 @@ $.ajax({
 
 /**/ 
 
-
+/*
 function dodaj_jelo(){
   adminSection.innerHTML = `
   <div class='container'>
@@ -152,16 +200,8 @@ $('#1').on('submit', function(e) {
 });
 
   
-}
+}*/
 
-$("click").click(function () {
-  $("html,body").animate(
-    {
-      scrollTop: $(".login").offset().top,
-    },
-    "slow"
-  );
-});
 
 $.ajax({
   type: "GET",
@@ -177,16 +217,30 @@ $.ajax({
 
 $.ajax({
   type: "GET",
-  url: "ajax/get_jela.php",
+  url: "ajax/tekuca_nedelja/get_tekuci_jelovnik.php",
   dataType: "html",
   success: function (response) {
     let novi_niz = response.split(",");
     for (i = 0; i < novi_niz.length; i++) {
-      izabrana_jela.push(novi_niz[i]);
+      izabrana_tekuca_jela.push(novi_niz[i]);
     }
   },
 });
 
+
+$.ajax({
+  type: "GET",
+  url: "ajax/iduca_nedelja/get_iduci_jelovnik.php",
+  dataType: "html",
+  success: function (response) {
+    let novi_niz = response.split(",");
+    for (i = 0; i < novi_niz.length; i++) {
+      izabrana_iduca_jela.push(novi_niz[i]);
+    }
+  },
+});
+
+/*
 function izmeni() {
   document
     .getElementById("update")
@@ -240,4 +294,4 @@ function sacuvaj() {
       window.location.replace("index.php");
     },
   });
-}
+}*/

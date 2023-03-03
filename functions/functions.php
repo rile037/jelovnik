@@ -27,7 +27,7 @@ function clear_message($message){
   while($row = $result -> fetch_assoc()){
     if($row['ponedeljak'] == 'none'){
       echo "
-      <form action='dodaj_jelo.php'>
+      <form action='dodaj_jeloget_obrok.php'>
       <h1>Niste dodali jelo!</h1>
       <button type='submit' class='btn'>Dodaj jelo</button>
       </form>
@@ -39,7 +39,7 @@ function clear_message($message){
 
 }*/
 
-function get_jelovnik(){
+function get_obrok(){
   $sql = "SELECT * FROM obrok";
   $result = query($sql);
 
@@ -48,33 +48,78 @@ function get_jelovnik(){
   <option value='".$row['obrok']."'>".$row['obrok']."</option>";
   }
 
-function upisi_jelovnik(){
+function upisi_iduci_jelovnik(){
+  if($_SERVER["REQUEST_METHOD"] == "POST"){
+    if($_POST['iduca_nedelja']){
+    $ponedeljak = ($_POST['iduci_pon']);
+    $utorak = ($_POST['iduci_uto']);
+    $sreda = ($_POST['iduci_sre']);
+    $cetvrtak = ($_POST['iduci_cet']);
+    $petak = ($_POST['iduci_pet']);
+  
+    $user = get_user();
+    $user_id = $user['id_korisnika'];
+  
+    $sql = "UPDATE korisnik SET
+    izabraoJelovnik_iduci = 1
+    WHERE id_korisnika = '$user_id'
+    ";
+  
+  
+    $sql2 = "UPDATE jelovnik SET
+    iduci_pon = '$ponedeljak',
+    iduci_uto = '$utorak',
+    iduci_sre = '$sreda',
+    iduci_cet = '$cetvrtak',
+    iduci_pet = '$petak'
+    WHERE id_korisnika = '$user_id'
+    ";
+    
+    confirm(query($sql));
+    confirm(query($sql2));
+    $html = "<p>Uspesno ste izabrali <a href='index.php'> jelovnik </a> za iduću nedelju.</p>";
+    set_message($html);
+    redirect('jelovnik.php');
+    clear_message();
+  
+}}}
+
+
+function upisi_tekuci_jelovnik(){
   if($_SERVER["REQUEST_METHOD"] == "POST")
 {
-  $ponedeljak = ($_POST['pon']);
-  $utorak = ($_POST['uto']);
-  $sreda = ($_POST['sre']);
-  $cetvrtak = ($_POST['cet']);
-  $petak = ($_POST['pet']);
+  if($_POST['tekuca_nedelja']){
+  $ponedeljak = ($_POST['tekuci_pon']);
+  $utorak = ($_POST['tekuci_uto']);
+  $sreda = ($_POST['tekuci_sre']);
+  $cetvrtak = ($_POST['tekuci_cet']);
+  $petak = ($_POST['tekuci_pet']);
 
   $user = get_user();
   $user_id = $user['id_korisnika'];
 
   $sql = "UPDATE korisnik SET
-  ponedeljak= '$ponedeljak',
-  utorak= '$utorak',
-  sreda= '$sreda',
-  cetvrtak= '$cetvrtak',
-  petak= '$petak'
+  izabraoJelovnik_tekuci = 1
+  WHERE id_korisnika = '$user_id'
+  ";
+
+
+  $sql2 = "UPDATE jelovnik SET
+  tekuci_pon = '$ponedeljak',
+  tekuci_uto = '$utorak',
+  tekuci_sre = '$sreda',
+  tekuci_cet = '$cetvrtak',
+  tekuci_pet = '$petak'
   WHERE id_korisnika = '$user_id'
   ";
   
   confirm(query($sql));
-  $html = "<p>Uspesno ste izabrali <a href='index.php'> jelovnik </a> za iducu nedelju.</p>";
+  confirm(query($sql2));
+  $html = "<p>Uspesno ste izabrali <a href='index.php'> jelovnik </a> za iduću nedelju.</p>";
   set_message($html);
-  redirect('dodaj_jelo.php');
+  redirect('jelovnik.php');
   clear_message();
-
+  }
 }
 }
 
@@ -114,39 +159,36 @@ function validate_user_registration(){
   if($_SERVER['REQUEST_METHOD'] == "POST"){
 
     $email = ($_POST['email']);
+    $password = ($_POST['password']);
     $ime_prezime = ($_POST['ime_prezime']);
     $pozicija = ($_POST['pozicija']);
-    $password = ($_POST['password']);
     $confirm_password = ($_POST['confirm_password']);
 
     if(strlen($email) < 3){
-      $errors[] = "- Email ne sme biti manji od 3 karaktera";
+      $errors[] = "Email ne sme biti manji od 3 karaktera";
     }
     
     if(email_exists($email)){
-      $errors[] = "- Taj email je zauzet!";
+      $errors[] = "Taj email je zauzet!";
     }
     if(strlen($password) < 8){
-      $errors[] = "- Lozinka mora biti veca od 8 karaktera!";
+      $errors[] = "Lozinka mora biti veca od 8 karaktera!";
     }
     if($password != $confirm_password){
-      $errors[] = "- Lozinke se ne podudaraju!";
+      $errors[] = "Lozinke se ne podudaraju!";
     }
     if(!empty($errors)){
       foreach($errors as $error){
-        echo "<div class='
-        alert' style='
-        color: red;
-        text-align: center;
-        font-size: 20px;
-        '>" . $error . "</div>";
+        echo '<div class="alert" > ' . $error . '</div>';
       }
+      echo "<hr>";
+        
     } else{
-      $ime_prezime = filter_var($ime_prezime, FILTER_SANITIZE_STRING);
       $email = filter_var($email, FILTER_SANITIZE_EMAIL);
-      $pozicija = filter_var($pozicija, FILTER_SANITIZE_EMAIL);
       $password = filter_var($password, FILTER_SANITIZE_STRING);
-      create_user($ime_prezime, $email, $pozicija, $password);
+      $ime_prezime = filter_var($ime_prezime, FILTER_SANITIZE_STRING);
+      $pozicija = filter_var($pozicija, FILTER_SANITIZE_EMAIL);
+      create_user($email, $password, $ime_prezime, $pozicija);
     }
 
   }
@@ -217,17 +259,27 @@ function create_user($email, $password, $ime_prezime, $pozicija){
   $ime_prezime = escape($ime_prezime);
   $pozicija = escape($pozicija);
   
-  $sql = "INSERT INTO korisnik(email, password, ime_prezime, pozicija, isAdmin, izabranoJelo, ponedeljak, utorak, sreda, cetvrtak, petak)";
-  $sql .= "VALUES('$email', '$password', '$ime_prezime', '$pozicija', 0, 0 ,'none', 'none', 'none', 'none', 'none')";
+  
+  $sql = "INSERT INTO korisnik(email, password, ime_prezime, pozicija, isAdmin, izabraoJelovnik_tekuci, izabraoJelovnik_iduci)";
+  $sql .= "VALUES('$email', '$password', '$ime_prezime', '$pozicija', 0, 0 , 0)";
 
   confirm(query($sql));
+
+  $sql2 = "SELECT * FROM korisnik WHERE email='$email'";
+  $result = query($sql2);
+  $row = $result-> fetch_assoc();
+
+  $id_korisnika = $row['id_korisnika'];
+  $sql3 = "INSERT INTO jelovnik(id_korisnika, tekuci_pon, tekuci_uto, tekuci_sre, tekuci_cet, tekuci_pet, iduci_pon, iduci_uto, iduci_sre, iduci_cet, iduci_pet)";
+  $sql3 .= "VALUES('$id_korisnika', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none')";
+  confirm(query($sql3));
   set_message("Uspesno ste se registrovali!");
   redirect('login.php');
 }
 
 function get_user($id = NULL){
   if($id != NULL){
-      $query = "SELECT * FROM korisnik WHERE id =" . $id;
+      $query = "SELECT * FROM korisnik WHERE id_korisnika =" . $id;
       $result = query($query);
 
       if($result->num_rows > 0){
@@ -321,63 +373,113 @@ function izlistaj_sve_zaposlene(){
 }
 
 
-function get_jelo(){
+function check_jelovnik(){
   $user = get_user();
   $user_id = $user['id_korisnika'];
-  $query = "SELECT * FROM korisnik WHERE id_korisnika ='$user_id'";
-  $result = query($query);
-  $row = $result->fetch_assoc();
-  if ($row['ponedeljak']!='') {
-      $pon = $row['ponedeljak'];
-      $uto = $row['utorak'];
-      $sre = $row['sreda'];
-      $cet = $row['cetvrtak'];
-      $pet = $row['petak'];
-      $korisnik = $row['ime_prezime'];
-      echo "
-      <table class='styled-table'>";
-      echo "<div class='center'><h2>".date("d-m-Y", strtotime('monday this week')),  " - ";   
-echo date("d-m-Y", strtotime('sunday this week')), "\n</h2></div>";
-    echo "<thead>
-        <tr>
-            <th>Dan</th>
-            <th>Jelo</th>
-        </tr>
-    </thead>
-    <tbody>
-    <tr class='kolone'>
-          <td><b>Ponedeljak</b></td>
-          <td id='kolonaPon'>". $pon ."</td>
-        </tr>
-        <tr class='kolone'>
-          <td id='kUto'><b>Utorak</b></td>
-          <td id='kolonaUto'>" . $uto ."</td>
-        </tr>
-        <tr class='kolone'>
-          <td><b>Sreda</b></td>
-          <td id='kolonaSre'>" . $sre ."</td>
-        </tr>
-        <tr class='kolone'>
-          <td id='kCet'><b>Cetvrtak</b></td>
-          <td id='kolonaCet'>" . $cet . "</td>
-        </tr>
-        <tr class='kolone'>
-          <td id='kPet'><b>Petak</b></td>
-          <td id='kolonaPet'>" . $pet . "</td>
-        </tr>
-        
-       
-    </tbody>
+  $sql = "SELECT * FROM korisnik WHERE id_korisnika = '$user_id'";
+  $result = query($sql);
 
-</table>
+  while($row = $result -> fetch_assoc()){
+     if($row['izabranoJelo'] = '0'){
+     }
+  }
+}
+
+function iduca_nedelja(){
+  echo "<p style='font-size: 20px;'>".date("d.m.Y", strtotime("monday next week"))." - ".date("d.m.Y", strtotime("sunday next week"))."</p>";
+}
+
+
+function tekuca_nedelja(){
+  echo "<p style='font-size: 20px;'>".date("d.m.Y.", strtotime("monday this week"))." - ".date("d.m.Y.", strtotime("sunday this week")). "</p>";
+}
+
+function izabraoJelovnik_tekuci(){
+
+  $id = get_user();
+  $id_korisnika = $id['id_korisnika'];
+  $sql = "SELECT * FROM korisnik WHERE id_korisnika='$id_korisnika'";
+  $result = query($sql);
+  $row = $result-> fetch_assoc();
+  if($row['izabraoJelovnik_tekuci'] == 1){
+    return 1;
+  }
+else{
+  return 0;
+}
+}
+
+function izabraoJelovnik_iduci(){
+  $id = get_user();
+  $id_korisnika = $id['id_korisnika'];
+  $sql = "SELECT * FROM korisnik WHERE id_korisnika='$id_korisnika'";
+  $result = query($sql);
+  $row = $result-> fetch_assoc();
+  if($row['izabraoJelovnik_iduci'] == 1){
+    return 1;
+  }
+else
+{
+  return 0;
+}
+}
+
+
+function get_iduci_jelovnik(){
+  $user = get_user();
+  $user_id = $user['id_korisnika'];
+  $query = "SELECT * FROM jelovnik WHERE id_korisnika ='$user_id'";
+  $query2 = "SELECT * FROM korisnik WHERe id_korisnika ='$user_id'";
+  $result = query($query);
+  $result2 = query($query2);
+  $row = $result->fetch_assoc();
+  $row2 = $result2->fetch_assoc();
+
+
+  if ($row2['izabraoJelovnik_iduci']!='0') {
       
+      $pon = $row['iduci_pon'];
+      $uto = $row['iduci_uto'];
+      $sre = $row['iduci_sre'];
+      $cet = $row['iduci_cet'];
+      $pet = $row['iduci_pet'];
+      $korisnik = $row2['ime_prezime'];
+      echo "
+      <div class='center'>
+      <table style='width: 100%;'>
+      <tr>
+      <td class='key'>Ponedeljak:</td>
+      <td class='value'> ".$pon."</td> 
+      </tr>
+      <tr>
+      <td class='key'>Utorak:</td>
+      <td class='value'> ".$uto."</td> 
+      </tr>
+      <tr>
+      <td class='key'>Sreda:</td>
+      <td class='value'> ".$sre."</td> 
+      </tr>
+      <tr>
+      <td class='key'>Cetvrtak:</td>
+      <td class='value'> ".$cet."</td> 
+      </tr>
+      <tr>
+      <td class='key'>Petak:</td>
+      <td class='value'> ".$pet."</td> 
+      </tr>
+      </table>
+            </div>
+            ";
+            /*
+<button type='submit' class='btn' id='update' onclick='izmeni()'>Izmeni</button>
+
       
-      ";
+      ";*/
 }
   else{
     echo "<div class='container'><h1 text-align: center;'>Niste izabrali jelovnik!</h1>
     
-    <form action='dodaj_jelo.php' style='padding-top: 15px;'>
+    <form action='jelovnik.php' style='padding-top: 15px;'>
     <button class='btn'>Izaberi jelovnik </button>
     </form>
     </div>";
@@ -385,23 +487,79 @@ echo date("d-m-Y", strtotime('sunday this week')), "\n</h2></div>";
 }
 
 
-function check_jelovnik(){
-
+function get_tekuci_jelovnik(){
   $user = get_user();
   $user_id = $user['id_korisnika'];
-  $sql = "SELECT * FROM Korisnik WHERE id_korisnika = '$user_id'";
-  $result = query($sql);
-
-  while($row = $result -> fetch_assoc()){
-    if(!$row['ponedeljak'] == 'none'){
-      echo "<form action='dodaj_jelo.php'>
-      <button type='submit' class='izmeni'>Dodaj jelo</button>
-      <form>";
-    }
-    else{
-      echo "<div class='center'><button type='submit' class='btn' id='update' onclick='izmeni()'>Izmeni</button></div>";
-    }
-  }
+  $query = "SELECT * FROM jelovnik WHERE id_korisnika ='$user_id'";
+  $query2 = "SELECT * FROM korisnik WHERe id_korisnika ='$user_id'";
+  $result = query($query);
+  $result2 = query($query2);
+  $row = $result->fetch_assoc();
+  $row2 = $result2->fetch_assoc();
 
 
+  if ($row2['izabraoJelovnik_tekuci']!='0') {
+      
+      $pon = $row['tekuci_pon'];
+      $uto = $row['tekuci_uto'];
+      $sre = $row['tekuci_sre'];
+      $cet = $row['tekuci_cet'];
+      $pet = $row['tekuci_pet'];
+      $korisnik = $row2['ime_prezime'];
+     
+echo "
+<div class='center'>
+<table style='width: 100%;'>
+<tr>
+<td class='key'>Ponedeljak:</td>
+<td class='value'>".$pon."</td> 
+</tr>
+<tr>
+<td class='key'>Utorak:</td>
+<td class='value'> ".$uto."</td> 
+</tr>
+<tr>
+<td class='key'>Sreda:</td>
+<td class='value'> ".$sre."</td> 
+</tr>
+<tr>
+<td class='key'>Cetvrtak:</td>
+<td class='value'> ".$cet."</td> 
+</tr>
+<tr>
+<td class='key'>Petak:</td>
+<td class='value'> ".$pet."</td> 
+</tr>
+</table>
+      </div>
+      ";
 }
+  else{
+    echo "<div class='container'><h1 text-align: center;'>Niste izabrali jelovnik!</h1>
+    
+    <form action='jelovnik.php' style='padding-top: 15px;'>
+    <button class='btn'>Izaberi jelovnik </button>
+    </form>
+    </div>";
+  }
+}
+
+//
+//function check_jelovnik(){
+
+  //$user = get_user();
+  //$user_id = $user['id_korisnika'];
+  //$sql = "SELECT * FROM Korisnik WHERE id_korisnika = '$user_id'";
+  //$result = query($sql);
+
+  //while($row = $result -> fetch_assoc()){
+    //if($row['izabranoJelo'] == '0'){
+      //echo "<form action='dodaj_jelo.php'>
+      //<button type='submit' class='izmeni'>Dodaj jelo</button>
+      //<form>";
+    //}
+
+  //}
+
+
+//}
