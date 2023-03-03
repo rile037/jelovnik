@@ -21,11 +21,13 @@ upisi_iduci_jelovnik();
   <div class='col' style='height: 1000px;'>
     <div class='center' style='margin-bottom: 7px;'>
   </div>
-    <div class='container' style='height: 430px;'>
+    <div class='container' style='height: auto;'>
     <h3 id='tekuci-naslov' style='margin-top: 6px;'>Tekuća nedelja</h3>
       <?php tekuca_nedelja();?>
       <hr>
       <?php if(izabraoJelovnik_tekuci() == 0):?>
+        <img src='assets/cancel.png' style='width: 120px; height: 120px;'>
+
       <form method="POST" id='upisi_tekuci_jelovnik'>
                 <br />
       
@@ -78,7 +80,7 @@ upisi_iduci_jelovnik();
               <?php else: ?>
                 <img src='assets/checked.png' alt='uspesno ste izabrali jelovnik' width='175px' height='176px' style='margin-top: 20px;'/>
                 
-                <p style='margin-top: 25px; font-size: 25px;'>Izabrali ste jelovnik za tekuću nedelju.</p>
+                <p style='margin-top: 25px; font-size: 25px;'>Izabrali ste jelovnik za <span style='font-weight: bold;'>tekuću</span> nedelju.</p>
 
                 <button class='btn' id='tekuci' style='background-color: rgb(10,160,110);' onClick="prikazi_jelovnik(this.id)">Prikaži</button>
 
@@ -92,12 +94,14 @@ upisi_iduci_jelovnik();
   <div class='col' style='height: 1000px;'>
   <div class='center' style='margin-bottom: 7px;'></div>
 
-  <div class='container' style='height: 430px;'>
+  <div class='container' style='height: auto;'>
   <h3 id='iduca-naslov' style='margin-top: 6px;'>Iduća nedelja</h3>
     
         <?php iduca_nedelja();?>
         <hr>
         <?php if(izabraoJelovnik_iduci() == 0):?>
+          <img src='assets/cancel.png' style='width: 120px; height: 120px;'>
+
         <form method="POST" id='upisi_iduci_jelovnik'>
                 <br />
       
@@ -150,7 +154,7 @@ upisi_iduci_jelovnik();
               <?php else: ?>
                 <img src='assets/checked.png' alt='uspesno ste izabrali jelovnik' width='175px' height='176px' style='margin-top: 20px;'/>
                 
-                <p style='margin-top: 25px; font-size: 25px;'>Izabrali ste jelovnik za iduću nedelju.</p>
+                <p style='margin-top: 25px; font-size: 25px;'>Izabrali ste jelovnik za <span style='font-weight: bold;'>iduću</span> nedelju.</p>
                 <button class='btn' id='iduci' style='background-color: rgb(10,160,110);' onClick="prikazi_jelovnik(this.id)">Prikaži</button>
 
                 <?php endif;?>

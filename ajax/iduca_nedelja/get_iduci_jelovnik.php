@@ -1,7 +1,7 @@
 <?php 
 
-include('../functions/db.php');
-include('../functions/functions.php');
+include('../../functions/db.php');
+include('../../functions/functions.php');
 session_start();
 $izabrana_jela = [];
 

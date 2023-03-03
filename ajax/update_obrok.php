@@ -22,4 +22,7 @@ tekuci_pet= '$pet'
 WHERE id_korisnika = '$user_id'
 ";
 confirm(query($sql));
+$html = "<p style='font-size: 30px;'>Uspesno ste izmenili obrok. <br> <a id='nazad-jelovnik' href='jelovnik.php'>Vrati se na jelovnik.</a></p>";
+set_message($html);
+
 ?>

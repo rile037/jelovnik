@@ -20,11 +20,19 @@ user_restriction();
          
 <div class='center'>
   <div class='container'>
+    <?php if(izabraoJelovnik_iduci() == 1):?>
   <img src='assets/checked.png' style='width: 120px; height: 120px;'>
-  <h3 style='margin-left: 15px;'>Izabrali ste jelovnik. </h3>
+  <h3 style='margin-left: 15px;'>Izabrali ste jelovnik </h3>
   <form action='jelovnik.php'>
   <button class='btn' style='background-color: rgb(10,160,110);' type='submit'>Pogledaj jelovnik</button>
 </form>
+<?php else: ?>
+  <img src='assets/cancel.png' style='width: 120px; height: 120px;'>
+  <h3 style='margin-left: 15px;'>Niste izabrali jelovnik </h3>
+  <form action='jelovnik.php'>
+  <button class='btn' style='background-color: rgb(241,82,73);' type='submit'>Izaberite jelovnik</button>
+</form>
+<?php endif;?>
 </div>
 </div>
 

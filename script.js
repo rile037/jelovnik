@@ -73,12 +73,7 @@ function zatvori_jelovnik(id){
   
 }
 
-
-
 $(document).ready(function () {
-
-
-
 
 
 text = document.getElementById('search-result');
@@ -130,8 +125,37 @@ function izmeniKorisnika(el){
   
 }
 
+function sacuvaj() {
+  let select0 = document.getElementById("tekuci_pon").value;
+  let select1 = document.getElementById("tekuci_uto").value;
+  let select2 = document.getElementById("tekuci_sre").value;
+  let select3 = document.getElementById("tekuci_cet").value;
+  let select4 = document.getElementById("tekuci_pet").value;
+  $.ajax({
+    type: "POST",
+    url: "ajax/update_obrok.php",
+    data: { select0, select1, select2, select3, select4 },
+    success: function (response) {
+      window.location.replace("izmeni.php");
+      
+    },
+  });
+}
 
 $(document).ready(function () {
+
+  document.getElementById("tekuci_pon").value = izabrana_tekuca_jela[0];
+  document.getElementById("tekuci_uto").value = izabrana_tekuca_jela[1];
+  document.getElementById("tekuci_sre").value = izabrana_tekuca_jela[2];
+  document.getElementById("tekuci_cet").value = izabrana_tekuca_jela[3];
+  document.getElementById("tekuci_pet").value = izabrana_tekuca_jela[4];
+
+
+  document.getElementById("iduci_pon").value = izabrana_iduca_jela[0];
+  document.getElementById("iduci_uto").value = izabrana_iduca_jela[1];
+  document.getElementById("iduci_sre").value = izabrana_iduca_jela[2];
+  document.getElementById("iduci_cet").value = izabrana_iduca_jela[3];
+  document.getElementById("iduci_pet").value = izabrana_iduca_jela[4];
   adminSection = document.getElementById('section');  
   
   $('#2').on('submit', function(e) {
@@ -247,7 +271,7 @@ function izmeni() {
     .setAttribute("onclick", "javascript: sacuvaj();");
     
 
-  izabrana_jela.splice(-1);
+  izabrana_tekuca_jela.splice(-1);
   jela.splice(-1);
   for (let i = 0; i < sveKolone.length; i++) {
     document.getElementById(sveKolone[i]).innerHTML = "";
@@ -273,11 +297,11 @@ function izmeni() {
   set_select();
 }
 function set_select() {
-  document.getElementById("0").value = izabrana_jela[0];
-  document.getElementById("1").value = izabrana_jela[1];
-  document.getElementById("2").value = izabrana_jela[2];
-  document.getElementById("3").value = izabrana_jela[3];
-  document.getElementById("4").value = izabrana_jela[4];
+  document.getElementById("tekuci_pon").value = izabrana_tekuca_jela[0];
+  document.getElementById("1").value = izabrana_tekuca_jela[1];
+  document.getElementById("2").value = izabrana_tekuca_jela[2];
+  document.getElementById("3").value = izabrana_tekuca_jela[3];
+  document.getElementById("4").value = izabrana_tekuca_jela[4];
 }
 
 function sacuvaj() {

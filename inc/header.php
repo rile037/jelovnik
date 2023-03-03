@@ -43,7 +43,6 @@ include "functions/init.php";
       <span class="navbar-text">     
     <a class="nav-link" href="login.php">Prijavi se <span class="sr-only"></span></a>
     </span>
-    <?php elseif (isAdmin()) : ?>
     
     <?php else: ?>
       <span class="navbar-text">     

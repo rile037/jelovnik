@@ -170,6 +170,19 @@ background-color: rgba(0,0,0,0.4);
   border-top-left-radius: 8px;
 }
 
+#nazad-jelovnik{
+  text-decoration: none;
+  color: rgb(61, 61, 255);
+}
+
+#izmeni{
+  background-color: white;
+  color: black; 
+  width: 120px; 
+  height: 40px; 
+  text-align: center;
+}
+
 .btn .jelovnik{
   background-color: green;
 }
@@ -204,15 +217,15 @@ background-color: rgba(0,0,0,0.4);
 
 .key{
   padding-top: 10px;
-  padding-left: 35px;
   text-align: left;
 }
 
 .value{
   font-weight: bold;
   padding-top: 10px;
+  text-align: right;
+  padding-right: 20px;
 
-  text-align: left;
 }
 
 #content-tekuci, #content-iduci{

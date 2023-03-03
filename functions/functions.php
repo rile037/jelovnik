@@ -308,6 +308,7 @@ function user_restriction(){
 }
 
 function isAdmin(){
+
   $user = get_user();
   $user_id = $user['id_korisnika'];
   $sql = "SELECT * FROM korisnik WHERE id_korisnika = '$user_id'";
@@ -321,6 +322,7 @@ function isAdmin(){
   else{
     echo "";
   }
+
 }
 
 function popuni_select(){
@@ -469,6 +471,11 @@ function get_iduci_jelovnik(){
       </tr>
       </table>
             </div>
+            <div class='center'>
+            <form action='izmeni.php' target='_blank' method='POST' name='iduci_jelovnik'>
+            <button type='submit' class='btn' id='izmeni' name='iduci_jelovnik'>Izmeni</button>
+            </form>
+</div>
             ";
             /*
 <button type='submit' class='btn' id='update' onclick='izmeni()'>Izmeni</button>
@@ -531,7 +538,12 @@ echo "
 <td class='value'> ".$pet."</td> 
 </tr>
 </table>
-      </div>
+</div>
+<div class='center'>
+<form action='izmeni.php' target='_blank' method='POST' name='tekuci_jelovnik'>
+<button type='submit' class='btn' id='izmeni' name='tekuci_jelovnik'>Izmeni</button>
+</form>
+</div>
       ";
 }
   else{
@@ -543,6 +555,159 @@ echo "
     </div>";
   }
 }
+
+function izmeni_jelovnik(){
+  if($_SERVER["REQUEST_METHOD"] == "POST")
+  {
+    if(isset($_POST['tekuci_jelovnik']))
+    {
+      tekuca_nedelja();
+      $user = get_user();
+  $user_id = $user['id_korisnika'];
+  $query = "SELECT * FROM jelovnik WHERE id_korisnika ='$user_id'";
+  $query2 = "SELECT * FROM korisnik WHERe id_korisnika ='$user_id'";
+  $result = query($query);
+  $result2 = query($query2);
+  $row = $result->fetch_assoc();
+  $row2 = $result2->fetch_assoc();
+
+
+  if ($row2['izabraoJelovnik_tekuci']!='0') {
+      
+      $pon = $row['tekuci_pon'];
+      $uto = $row['tekuci_uto'];
+      $sre = $row['tekuci_sre'];
+      $cet = $row['tekuci_cet'];
+      $pet = $row['tekuci_pet'];
+      $korisnik = $row2['ime_prezime'];
+     
+echo "
+<div class='center'>
+<form method='POST' id='upisi_tekuci_jelovnik'>
+
+<table style='width: 100%;'>
+<tr class='sveKolone'>
+<td class='key'>Ponedeljak:</td>
+<td class='value'>
+<select style='width: 200px; height: 25px;' name='tekuci_pon' id='tekuci_pon' form='upisi_tekuci_jelovnik'>
+"; get_obrok(); echo"
+</select>
+</td>
+<tr>
+<td class='key'>Utorak:</td>
+<td class='value'>
+<select style='width: 200px; height: 25px;' name='tekuci_uto' id='tekuci_uto' form='upisi_tekuci_jelovnik'>
+"; get_obrok(); echo"
+</select>
+</td> 
+</tr>
+<tr>
+<td class='key'>Sreda:</td>
+<td class='value'>
+<select style='width: 200px; height: 25px;' name='tekuci_sre' id='tekuci_sre' form='upisi_tekuci_jelovnik'>
+"; get_obrok(); echo"
+</select>
+</td> 
+</tr>
+<tr>
+<td class='key'>Cetvrtak:</td>
+<td class='value'>
+<select style='width: 200px; height: 25px;' name='tekuci_cet' id='tekuci_cet' form='upisi_tekuci_jelovnik'>
+"; get_obrok(); echo"
+</select>
+</td> 
+</tr>
+<tr>
+<td class='key'>Petak:</td>
+<td class='value'>
+<select style='width: 200px; height: 25px;' name='tekuci_pet' id='tekuci_pet' form='upisi_tekuci_jelovnik'>
+"; get_obrok(); echo"
+</select>
+</td> 
+</tr>
+</table>
+</form>
+</div>
+<button type='submit' class='btn' id='update' onclick='sacuvaj()'>Sačuvaj</button>
+";
+  }
+    }
+    elseif(isset($_POST['iduci_jelovnik']))
+    {
+      iduca_nedelja();
+      $user = get_user();
+  $user_id = $user['id_korisnika'];
+  $query = "SELECT * FROM jelovnik WHERE id_korisnika ='$user_id'";
+  $query2 = "SELECT * FROM korisnik WHERe id_korisnika ='$user_id'";
+  $result = query($query);
+  $result2 = query($query2);
+  $row = $result->fetch_assoc();
+  $row2 = $result2->fetch_assoc();
+
+
+  if ($row2['izabraoJelovnik_iduci']!='0') {
+      
+      $pon = $row['iduci_pon'];
+      $uto = $row['iduci_uto'];
+      $sre = $row['iduci_sre'];
+      $cet = $row['iduci_cet'];
+      $pet = $row['iduci_pet'];
+      $korisnik = $row2['ime_prezime'];
+     
+echo "
+<div class='center'>
+<form method='POST' id='upisi_iduci_jelovnik'>
+
+<table style='width: 100%;'>
+<tr class='sveKolone'>
+<td class='key'>Ponedeljak:</td>
+<td class='value'>
+<select style='width: 200px; height: 25px;' name='iduci_pon' id='iduci_pon' form='upisi_iduci_jelovnik'>
+"; get_obrok(); echo"
+</select>
+</td>
+<tr>
+<td class='key'>Utorak:</td>
+<td class='value'>
+<select style='width: 200px; height: 25px;' name='iduci_uto' id='iduci_uto' form='upisi_iduci_jelovnik'>
+"; get_obrok(); echo"
+</select>
+</td> 
+</tr>
+<tr>
+<td class='key'>Sreda:</td>
+<td class='value'>
+<select style='width: 200px; height: 25px;' name='iduci_sre' id='iduci_sre' form='upisi_iduci_jelovnik'>
+"; get_obrok(); echo"
+</select>
+</td> 
+</tr>
+<tr>
+<td class='key'>Cetvrtak:</td>
+<td class='value'>
+<select style='width: 200px; height: 25px;' name='iduci_cet' id='iduci_cet' form='upisi_iduci_jelovnik'>
+"; get_obrok(); echo"
+</select>
+</td> 
+</tr>
+<tr>
+<td class='key'>Petak:</td>
+<td class='value'>
+<select style='width: 200px; height: 25px;' name='iduci_pet' id='iduci_pet' form='upisi_iduci_jelovnik'>
+"; get_obrok(); echo"
+</select>
+</td> 
+</tr>
+</table>
+</form>
+</div>
+<button type='submit' class='btn' id='update' onclick='sacuvaj()'>Sačuvaj</button>
+";
+    }
+  }
+}
+}
+
 
 //
 //function check_jelovnik(){
