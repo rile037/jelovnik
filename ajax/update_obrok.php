@@ -14,11 +14,11 @@ $cet = $_POST['select3'];
 $pet = $_POST['select4'];
 
 $sql = "UPDATE jelovnik SET
-tekuci_pon= '$pon',
-tekuci_uto= '$uto',
-tekuci_sre= '$sre',
-tekuci_cet= '$cet',
-tekuci_pet= '$pet'
+iduci_pon= '$pon',
+iduci_uto= '$uto',
+iduci_sre= '$sre',
+iduci_cet= '$cet',
+iduci_pet= '$pet'
 WHERE id_korisnika = '$user_id'
 ";
 confirm(query($sql));

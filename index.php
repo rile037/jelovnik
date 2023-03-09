@@ -17,6 +17,8 @@ user_restriction();
 </head>
 <body>
           <div class='main'>
+            <?php proveri_datum();
+?>
          
 <div class='center'>
   <div class='container'>
@@ -35,7 +37,6 @@ user_restriction();
 <?php endif;?>
 </div>
 </div>
-
     </div>      
     </body>
   

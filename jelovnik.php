@@ -16,10 +16,17 @@ upisi_iduci_jelovnik();
 </head>
 <body>
 <div class='main' style='height: auto;'>
+<div class='center' style='color: green; font-size: 20px; '>
+
+<?php display_message(); ?>
+</div>
 <div class="center">
+  
 <div class='row'>
   <div class='col' style='height: 1000px;'>
     <div class='center' style='margin-bottom: 7px;'>
+    
+
   </div>
     <div class='container' style='height: auto;'>
     <h3 id='tekuci-naslov' style='margin-top: 6px;'>Tekuća nedelja</h3>
@@ -34,7 +41,7 @@ upisi_iduci_jelovnik();
                 <!--
                 <input id="pon" type="text" name="pon" required />-->
                 <label style='text-align: left;' for="tekuci_pon">Ponedeljak:</label>
-                <select name='tekuci_pon' id='tekuci_pon' form='upisi_tekuci_jelovnik'>
+                <select name='tekuci_pon' id='tekuci_pon' form='upisi_tekuci_jelovnik' >
                 <?php get_obrok(); ?>
                 </select>
                 <br />
@@ -85,7 +92,7 @@ upisi_iduci_jelovnik();
                 <button class='btn' id='tekuci' style='background-color: rgb(10,160,110);' onClick="prikazi_jelovnik(this.id)">Prikaži</button>
 
                 <?php endif;?>
-               
+          
     </div>
     <div id='content-tekuci'>
                     <?php get_tekuci_jelovnik(); ?>
@@ -166,11 +173,7 @@ upisi_iduci_jelovnik();
       </div>
 </div>
 </div>
-    <div class='center' style='color: green; font-size: 20px; padding-top: 15px;'>
-
-      <?php display_message(); ?>
-      </div>
-
+    
   </div>
 </div>
 </body>

@@ -24,5 +24,5 @@ include "functions/init.php";?>
 </div>
 </div>
 </body>
-<script src='script.js'></script>
 </html>
+<script src="script.js"></script>

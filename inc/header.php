@@ -46,8 +46,16 @@ include "functions/init.php";
     
     <?php else: ?>
       <span class="navbar-text">     
+    <a class="nav-link" href="profil.php"><b>Profil</b> <span class="sr-only"></span></a>
+    </span>
+
+    <span class="navbar-text">     
+    <a class="nav-link" href="#" style='padding-left: 0px; padding-right: 0px;'>| <span class="sr-only"></span></a>
+    </span>
+      <span class="navbar-text" >     
     <a class="nav-link" href="index.php">Početna <span class="sr-only"></span></a>
     </span>
+
     <span class="navbar-text">
     <a class="nav-link" href="jelovnik.php">Jelovnik <span class="sr-only"></span></a>
     </span>

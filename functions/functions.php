@@ -13,31 +13,148 @@ function set_message($message){
   }
 }
 
+
 function clear_message($message){
   $message = " ";
 }
 
-/*function check_jelovnik(){
 
+function promeni_jelovnik(){
   $user = get_user();
-  $user_id = $user['id_korisnika'];
-  $sql = "SELECT * FROM Korisnik WHERE id_korisnika = '$user_id'";
+    $user_id =$user['id_korisnika'];
+    $sql = "SELECT * FROM jelovnik WHERE id_korisnika ='$user_id' ";
+    $result = query($sql);
+    while($row = $result -> fetch_assoc())
+    {
+
+      $iduci_pon = $row['iduci_pon'];
+      $iduci_uto = $row['iduci_uto'];
+      $iduci_sre = $row['iduci_sre'];
+      $iduci_cet = $row['iduci_cet'];
+      $iduci_pet = $row['iduci_pet'];
+      echo $iduci_pon;
+
+      $sql2 = "UPDATE jelovnik SET 
+      tekuci_pon = '$iduci_pon',
+      tekuci_uto = '$iduci_uto',
+      tekuci_sre = '$iduci_sre',
+      tekuci_cet = '$iduci_cet',
+      tekuci_pet = '$iduci_pet'
+      WHERE id_korisnika = '$user_id'
+      ";
+
+      $sql3 = "UPDATE jelovnik SET 
+      iduci_pon = 'none',
+      iduci_uto = 'none',
+      iduci_sre = 'none',
+      iduci_cet = 'none',
+      iduci_pet = 'none'
+      WHERE id_korisnika = '$user_id'
+      ";
+
+      $sql4 = "UPDATE korisnik SET
+      izabraoJelovnik_iduci = 0
+      WHERE id_korisnika = '$user_id'
+      ";
+      confirm(query($sql2));
+      confirm(query($sql3));
+      confirm(query($sql4));
+
+    }
+}
+
+function proveri_datum()
+{
+
+$currentDate = date("d.m.Y");
+$currentTime = date("H:i:s");
+
+$thisWeekDay = date("d.m.Y.", strtotime("sunday this week"));
+$thisWeekHour = date("H:i", strtotime("23:59"));
+$result =  date("d.m.Y H:i:s", strtotime($currentDate . $currentTime));
+
+if($currentDate = $thisWeekDay){
+
+  if ($currentTime > $thisWeekHour) 
+  {
+    promeni_jelovnik();
+  }
+  else{
+    echo "false";
+  }
+}
+}
+
+function user_profile_image_upload()
+{
+    if ($_SERVER['REQUEST_METHOD'] == "POST") {
+        $target_dir = "user/";
+        $user = get_user();
+        $user_id = $user['id_korisnika'];
+        $target_file = $target_dir . $user_id . "." .pathinfo(basename($_FILES["profile_image_file"]["name"]), PATHINFO_EXTENSION);;
+        $uploadOk = 1;
+        $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+        $error = "";
+
+        $check = getimagesize($_FILES["profile_image_file"]["tmp_name"]);
+        if ($check !== false) {
+            $uploadOk = 1;
+        } else {
+            $error = "File is not an image.";
+            $uploadOk = 0;
+        }
+
+        if ($_FILES["profile_image_file"]["size"] > 5000000) {
+            $error = "Sorry, your file is too large.";
+            $uploadOk = 0;
+        }
+
+        if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
+            $error = "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+            $uploadOk = 0;
+        }
+
+        if ($uploadOk == 0) {
+            set_message('Error uploading file: '. $error);
+        } else {
+            $sql = "UPDATE korisnik SET fotografija='$target_file' WHERE id_korisnika=$user_id";
+            confirm(query($sql));
+            $html = "<h5 style='color: green;'>Uspesno ste promenili fotografiju!<h5>";
+            set_message($html);
+
+            if (!move_uploaded_file($_FILES["profile_image_file"]["tmp_name"], $target_file)) {
+                set_message('Error uploading file: '. $error);
+            }
+        }
+
+        redirect('profil.php');
+    }
+  }
+
+function get_profile_data($id)
+{
+  $sql = "SELECT * FROM korisnik WHERE id_korisnika='$id'";
   $result = query($sql);
 
   while($row = $result -> fetch_assoc()){
-    if($row['ponedeljak'] == 'none'){
-      echo "
-      <form action='dodaj_jeloget_obrok.php'>
-      <h1>Niste dodali jelo!</h1>
-      <button type='submit' class='btn'>Dodaj jelo</button>
-      </form>
- ";
-    }
-
+    echo 
+    "
+    <img src='".$row['fotografija']."' id='img-profile'/ >
+    <br>
+    <button class='btn' onclick='open_file()'>Promeni fotografiju</button>
+    <form method='POST' enctype='multipart/form-data' id='inp'>
+    <input type='file' id='input_file' name='profile_image_file' hidden>
+    <input type='submit' id='save-button' class='btn' style='background-color: green;' value='Sačuvaj promene' name='submit' hidden>
+    </form>
+        <hr>
+    <h1>".$row['ime_prezime']."</h1>
+    <hr>
+    <h4>".$row['email']."</h4>
+    <h4>".$row['pozicija']."</h4>
+    
+    ";
   }
-
-
-}*/
+}
 
 function get_obrok(){
   $sql = "SELECT * FROM obrok";
@@ -49,17 +166,31 @@ function get_obrok(){
   }
 
 function upisi_iduci_jelovnik(){
+  $errors;
   if($_SERVER["REQUEST_METHOD"] == "POST"){
-    if($_POST['iduca_nedelja']){
-    $ponedeljak = ($_POST['iduci_pon']);
-    $utorak = ($_POST['iduci_uto']);
-    $sreda = ($_POST['iduci_sre']);
-    $cetvrtak = ($_POST['iduci_cet']);
-    $petak = ($_POST['iduci_pet']);
+    if(isset($_POST['iduca_nedelja']))
+    {
+    if(!isset($_POST['iduci_pon']) or !isset($_POST['iduci_uto']) or !isset($_POST['iduci_sre']) or !isset($_POST['iduci_cet']) or !isset($_POST['iduci_pet']))
+    {
+        $errors = "<p style='color: red;'>Greska, obrok nije izabran.</p>";
+    }
+    else{
+        $ponedeljak = $_POST['iduci_pon'];
+        $utorak = ($_POST['iduci_uto']);
+        $sreda = ($_POST['iduci_sre']);
+        $cetvrtak = ($_POST['iduci_cet']);
+        $petak = ($_POST['iduci_pet']);
+    }
   
     $user = get_user();
     $user_id = $user['id_korisnika'];
-  
+
+    if(!empty($errors))
+    {
+      set_message($errors);
+    } 
+else
+{
     $sql = "UPDATE korisnik SET
     izabraoJelovnik_iduci = 1
     WHERE id_korisnika = '$user_id'
@@ -77,27 +208,42 @@ function upisi_iduci_jelovnik(){
     
     confirm(query($sql));
     confirm(query($sql2));
-    $html = "<p>Uspesno ste izabrali <a href='index.php'> jelovnik </a> za iduću nedelju.</p>";
+    $html = "<p>Uspesno ste izabrali <a href='index.php'> jelovnik</a>.</p>";
     set_message($html);
     redirect('jelovnik.php');
     clear_message();
   
-}}}
+}
+}
+}
+}
 
 
 function upisi_tekuci_jelovnik(){
+  $errors;
   if($_SERVER["REQUEST_METHOD"] == "POST")
 {
-  if($_POST['tekuca_nedelja']){
-  $ponedeljak = ($_POST['tekuci_pon']);
-  $utorak = ($_POST['tekuci_uto']);
-  $sreda = ($_POST['tekuci_sre']);
-  $cetvrtak = ($_POST['tekuci_cet']);
-  $petak = ($_POST['tekuci_pet']);
+  if(isset($_POST['tekuca_nedelja']))
+  {
+    if(!isset($_POST['tekuci_pon']) or !isset($_POST['tekuci_uto']) or !isset($_POST['tekuci_sre']) or !isset($_POST['tekuci_cet']) or !isset($_POST['tekuci_pet']))
+    {
+        $errors = "<p style='color: red;'>Greska, obrok nije izabran.</p>";
+    }
+    else{
+        $ponedeljak = $_POST['tekuci_pon'];
+        $utorak = ($_POST['tekuci_uto']);
+        $sreda = ($_POST['tekuci_sre']);
+        $cetvrtak = ($_POST['tekuci_cet']);
+        $petak = ($_POST['tekuci_pet']);
+    }
 
-  $user = get_user();
-  $user_id = $user['id_korisnika'];
-
+    $user = get_user();
+    $user_id = $user['id_korisnika'];
+  if(!empty($errors)){
+        set_message($errors);
+    } 
+  else
+  {
   $sql = "UPDATE korisnik SET
   izabraoJelovnik_tekuci = 1
   WHERE id_korisnika = '$user_id'
@@ -115,11 +261,12 @@ function upisi_tekuci_jelovnik(){
   
   confirm(query($sql));
   confirm(query($sql2));
-  $html = "<p>Uspesno ste izabrali <a href='index.php'> jelovnik </a> za iduću nedelju.</p>";
+  $html = "<p>Uspesno ste izabrali <a href='index.php'> jelovnik.</a>.</p>";
   set_message($html);
   redirect('jelovnik.php');
   clear_message();
   }
+}
 }
 }
 
@@ -260,8 +407,8 @@ function create_user($email, $password, $ime_prezime, $pozicija){
   $pozicija = escape($pozicija);
   
   
-  $sql = "INSERT INTO korisnik(email, password, ime_prezime, pozicija, isAdmin, izabraoJelovnik_tekuci, izabraoJelovnik_iduci)";
-  $sql .= "VALUES('$email', '$password', '$ime_prezime', '$pozicija', 0, 0 , 0)";
+  $sql = "INSERT INTO korisnik(email, password, ime_prezime, pozicija, fotografija, isAdmin, izabraoJelovnik_tekuci, izabraoJelovnik_iduci)";
+  $sql .= "VALUES('$email', '$password', '$ime_prezime', '$pozicija', 'user//user.png', 0, 0 , 0)";
 
   confirm(query($sql));
 
@@ -539,11 +686,6 @@ echo "
 </tr>
 </table>
 </div>
-<div class='center'>
-<form action='izmeni.php' target='_blank' method='POST' name='tekuci_jelovnik'>
-<button type='submit' class='btn' id='izmeni' name='tekuci_jelovnik'>Izmeni</button>
-</form>
-</div>
       ";
 }
   else{
@@ -559,80 +701,7 @@ echo "
 function izmeni_jelovnik(){
   if($_SERVER["REQUEST_METHOD"] == "POST")
   {
-    if(isset($_POST['tekuci_jelovnik']))
-    {
-      tekuca_nedelja();
-      $user = get_user();
-  $user_id = $user['id_korisnika'];
-  $query = "SELECT * FROM jelovnik WHERE id_korisnika ='$user_id'";
-  $query2 = "SELECT * FROM korisnik WHERe id_korisnika ='$user_id'";
-  $result = query($query);
-  $result2 = query($query2);
-  $row = $result->fetch_assoc();
-  $row2 = $result2->fetch_assoc();
-
-
-  if ($row2['izabraoJelovnik_tekuci']!='0') {
-      
-      $pon = $row['tekuci_pon'];
-      $uto = $row['tekuci_uto'];
-      $sre = $row['tekuci_sre'];
-      $cet = $row['tekuci_cet'];
-      $pet = $row['tekuci_pet'];
-      $korisnik = $row2['ime_prezime'];
-     
-echo "
-<div class='center'>
-<form method='POST' id='upisi_tekuci_jelovnik'>
-
-<table style='width: 100%;'>
-<tr class='sveKolone'>
-<td class='key'>Ponedeljak:</td>
-<td class='value'>
-<select style='width: 200px; height: 25px;' name='tekuci_pon' id='tekuci_pon' form='upisi_tekuci_jelovnik'>
-"; get_obrok(); echo"
-</select>
-</td>
-<tr>
-<td class='key'>Utorak:</td>
-<td class='value'>
-<select style='width: 200px; height: 25px;' name='tekuci_uto' id='tekuci_uto' form='upisi_tekuci_jelovnik'>
-"; get_obrok(); echo"
-</select>
-</td> 
-</tr>
-<tr>
-<td class='key'>Sreda:</td>
-<td class='value'>
-<select style='width: 200px; height: 25px;' name='tekuci_sre' id='tekuci_sre' form='upisi_tekuci_jelovnik'>
-"; get_obrok(); echo"
-</select>
-</td> 
-</tr>
-<tr>
-<td class='key'>Cetvrtak:</td>
-<td class='value'>
-<select style='width: 200px; height: 25px;' name='tekuci_cet' id='tekuci_cet' form='upisi_tekuci_jelovnik'>
-"; get_obrok(); echo"
-</select>
-</td> 
-</tr>
-<tr>
-<td class='key'>Petak:</td>
-<td class='value'>
-<select style='width: 200px; height: 25px;' name='tekuci_pet' id='tekuci_pet' form='upisi_tekuci_jelovnik'>
-"; get_obrok(); echo"
-</select>
-</td> 
-</tr>
-</table>
-</form>
-</div>
-<button type='submit' class='btn' id='update' onclick='sacuvaj()'>Sačuvaj</button>
-";
-  }
-    }
-    elseif(isset($_POST['iduci_jelovnik']))
+    if(isset($_POST['iduci_jelovnik']))
     {
       iduca_nedelja();
       $user = get_user();
@@ -643,7 +712,6 @@ echo "
   $result2 = query($query2);
   $row = $result->fetch_assoc();
   $row2 = $result2->fetch_assoc();
-
 
   if ($row2['izabraoJelovnik_iduci']!='0') {
       
@@ -708,23 +776,4 @@ echo "
 }
 }
 
-
-//
-//function check_jelovnik(){
-
-  //$user = get_user();
-  //$user_id = $user['id_korisnika'];
-  //$sql = "SELECT * FROM Korisnik WHERE id_korisnika = '$user_id'";
-  //$result = query($sql);
-
-  //while($row = $result -> fetch_assoc()){
-    //if($row['izabranoJelo'] == '0'){
-      //echo "<form action='dodaj_jelo.php'>
-      //<button type='submit' class='izmeni'>Dodaj jelo</button>
-      //<form>";
-    //}
-
-  //}
-
-
-//}
+?>
