@@ -1,4 +1,4 @@
-# Jelovnik
+# Jelovnik.rs
 
 ## Web servis preko kojeg zaposleni firme bira koji će obrok jesti u toku radnog dana. 
 
