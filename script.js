@@ -152,13 +152,15 @@ function open_file(){
 }
 
 $(document).ready(function () {
-
+  adminSection = document.getElementById('section'); 
+  if(window.location.href.indexOf("izmeni") > -1)
+  { 
   document.getElementById("iduci_pon").value = izabrana_iduca_jela[0];
   document.getElementById("iduci_uto").value = izabrana_iduca_jela[1];
   document.getElementById("iduci_sre").value = izabrana_iduca_jela[2];
   document.getElementById("iduci_cet").value = izabrana_iduca_jela[3];
   document.getElementById("iduci_pet").value = izabrana_iduca_jela[4];
-  adminSection = document.getElementById('section');  
+  }
   
   $('#2').on('submit', function(e) {
       e.preventDefault();
@@ -201,7 +203,7 @@ $.ajax({
 
 /**/ 
 
-/*
+
 function dodaj_jelo(){
   adminSection.innerHTML = `
   <div class='container'>
@@ -224,9 +226,9 @@ $('#1').on('submit', function(e) {
     }
   });
 });
-
+}
   
-}*/
+
 
 
 $.ajax({

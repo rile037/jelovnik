@@ -79,9 +79,6 @@ if($currentDate = $thisWeekDay){
   {
     promeni_jelovnik();
   }
-  else{
-    echo "false";
-  }
 }
 }
 
@@ -462,12 +459,10 @@ function isAdmin(){
   $result = query($sql);
   $row = $result->fetch_assoc();
   if($row['isAdmin'] == 1){
-    echo"<span class='navbar-text'>
-    <a class='nav-link' href='admin.php'><b id='admin'>Admin</b> <span class='sr-only'>(current)</span></a>
-    </span>";
+    return 1;
   }
   else{
-    echo "";
+    return 0;
   }
 
 }

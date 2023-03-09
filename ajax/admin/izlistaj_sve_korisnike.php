@@ -2,7 +2,8 @@
 include('../../functions/db.php');
 if($_SERVER["REQUEST_METHOD"] == "GET"){
 
-$sql = "SELECT * FROM korisnik";
+
+$sql = "SELECT * FROM jelovnik";
 $result = query($sql);
 echo "
 <div class='center'>
@@ -12,6 +13,7 @@ echo "
   <input type='search' class='input' id='ime' name='ime' placeholder='Ime zaposlenog...'></input>
   <button type='submit' class='btn pretrazi'><i class='fa fa-search' aria-hidden='true'></i></button>
 </form></div></div>";
+
 
 while ($row = $result -> fetch_assoc()){
   echo 
@@ -27,24 +29,46 @@ while ($row = $result -> fetch_assoc()){
   </thead>
   <tbody>
   <tr>
-  <td><b>Ponedeljak</b></td>
-  <td><b>".$row['ponedeljak']."</b></td>
+  <td><b>Tekuci onedeljak</b></td>
+  <td><b>".$row['tekuci_pon']."</b></td>
   </tr>
   <tr>
-  <td><b>Utorak</b></td>
-  <td><b>".$row['utorak']."</b></td>
+  <td><b>Tekuci utorak</b></td>
+  <td><b>".$row['tekuci_uto']."</b></td>
   </tr>
   <tr>
-  <td><b>Sreda</b></td>
-  <td><b>".$row['sreda']."</b></td>
+  <td><b>Tekuci sreda</b></td>
+  <td><b>".$row['tekuci_sre']."</b></td>
   </tr>
   <tr>
-  <td><b>Cetvrtak</b></td>
-  <td><b>".$row['cetvrtak']."</b></td>
+  <td><b>Tekuci cetvrtak</b></td>
+  <td><b>".$row['tekuci_cet']."</b></td>
   </tr>
   <tr>
-  <td><b>Petak</b></td>
-  <td><b>".$row['petak']."</b></td>
+  <td><b>Tekuci petak</b></td>
+  <td><b>".$row['tekuci_pet']."</b></td>
+  </tr>
+  <tr>
+
+  <tr>
+  <td><b>Tekuci onedeljak</b></td>
+  <td><b>".$row['tekuci_pon']."</b></td>
+  </tr>
+  <tr>
+  <td><b>Tekuci utorak</b></td>
+  <td><b>".$row['tekuci_uto']."</b></td>
+  </tr>
+  <tr>
+  <td><b>Tekuci sreda</b></td>
+  <td><b>".$row['tekuci_sre']."</b></td>
+  </tr>
+  <tr>
+  <td><b>Tekuci cetvrtak</b></td>
+  <td><b>".$row['tekuci_cet']."</b></td>
+  </tr>
+  <tr>
+  <td><b>Tekuci petak</b></td>
+  <td><b>".$row['tekuci_pet']."</b></td>
   </tr>
   <tr>
 
