@@ -3,8 +3,13 @@ include('../../functions/db.php');
 if($_SERVER["REQUEST_METHOD"] == "GET"){
 
 
-$sql = "SELECT * FROM jelovnik";
+//$sql = "SELECT * FROM jelovnik";
+//$result = query($sql);
+
+$sql = "SELECT * FROM korisnik
+INNER JOIN jelovnik ON korisnik.id_korisnika = jelovnik.id_korisnika";
 $result = query($sql);
+
 echo "
 <div class='center'>
 <div id='pretraga'>
@@ -29,7 +34,7 @@ while ($row = $result -> fetch_assoc()){
   </thead>
   <tbody>
   <tr>
-  <td><b>Tekuci onedeljak</b></td>
+  <td><b>Tekuci ponedeljak</b></td>
   <td><b>".$row['tekuci_pon']."</b></td>
   </tr>
   <tr>
@@ -49,25 +54,27 @@ while ($row = $result -> fetch_assoc()){
   <td><b>".$row['tekuci_pet']."</b></td>
   </tr>
   <tr>
+  <td><b</b></td>
+  </tr>
 
   <tr>
-  <td><b>Tekuci onedeljak</b></td>
+  <td><b>Iduci ponedeljak</b></td>
   <td><b>".$row['tekuci_pon']."</b></td>
   </tr>
   <tr>
-  <td><b>Tekuci utorak</b></td>
+  <td><b>Iduci utorak</b></td>
   <td><b>".$row['tekuci_uto']."</b></td>
   </tr>
   <tr>
-  <td><b>Tekuci sreda</b></td>
+  <td><b>Iduci sreda</b></td>
   <td><b>".$row['tekuci_sre']."</b></td>
   </tr>
   <tr>
-  <td><b>Tekuci cetvrtak</b></td>
+  <td><b>Iduci cetvrtak</b></td>
   <td><b>".$row['tekuci_cet']."</b></td>
   </tr>
   <tr>
-  <td><b>Tekuci petak</b></td>
+  <td><b>Iduci petak</b></td>
   <td><b>".$row['tekuci_pet']."</b></td>
   </tr>
   <tr>

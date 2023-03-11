@@ -3,7 +3,8 @@ include('../../functions/db.php');
 if($_SERVER["REQUEST_METHOD"] == "GET")
 {
   $ime = $_GET['ime'];
-  $sql = "SELECT * FROM korisnik WHERE ime_prezime like '%".$ime."%'";
+  $sql = "SELECT * FROM korisnik INNER JOIN jelovnik ON korisnik.id_korisnika = jelovnik.id_korisnika 
+  WHERE ime_prezime like '%".$ime."%'";
   $result = query($sql);
   while($row = $result -> fetch_assoc()){
     echo "
@@ -17,24 +18,48 @@ if($_SERVER["REQUEST_METHOD"] == "GET")
     </thead>
     <tbody>
     <tr>
-    <td><b>Ponedeljak</b></td>
-    <td><b>".$row['ponedeljak']."</b></td>
+    <td><b>Tekuci ponedeljak</b></td>
+    <td><b>".$row['tekuci_pon']."</b></td>
     </tr>
     <tr>
-    <td><b>Utorak</b></td>
-    <td><b>".$row['utorak']."</b></td>
+    <td><b>Tekuci utorak</b></td>
+    <td><b>".$row['tekuci_uto']."</b></td>
     </tr>
     <tr>
-    <td><b>Sreda</b></td>
-    <td><b>".$row['sreda']."</b></td>
+    <td><b>Tekuci sreda</b></td>
+    <td><b>".$row['tekuci_sre']."</b></td>
     </tr>
     <tr>
-    <td><b>Cetvrtak</b></td>
-    <td><b>".$row['cetvrtak']."</b></td>
+    <td><b>Tekuci cetvrtak</b></td>
+    <td><b>".$row['tekuci_cet']."</b></td>
     </tr>
     <tr>
-    <td><b>Petak</b></td>
-    <td><b>".$row['petak']."</b></td>
+    <td><b>Tekuci petak</b></td>
+    <td><b>".$row['tekuci_pet']."</b></td>
+    </tr>
+    <tr>
+    <td><b</b></td>
+    </tr>
+  
+    <tr>
+    <td><b>Iduci ponedeljak</b></td>
+    <td><b>".$row['tekuci_pon']."</b></td>
+    </tr>
+    <tr>
+    <td><b>Iduci utorak</b></td>
+    <td><b>".$row['tekuci_uto']."</b></td>
+    </tr>
+    <tr>
+    <td><b>Iduci sreda</b></td>
+    <td><b>".$row['tekuci_sre']."</b></td>
+    </tr>
+    <tr>
+    <td><b>Iduci cetvrtak</b></td>
+    <td><b>".$row['tekuci_cet']."</b></td>
+    </tr>
+    <tr>
+    <td><b>Iduci petak</b></td>
+    <td><b>".$row['tekuci_pet']."</b></td>
     </tr>
     <tr>
   

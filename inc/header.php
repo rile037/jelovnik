@@ -38,15 +38,17 @@ include "functions/init.php";
         <a id='logo' href='index.php'>Jelovnik.rs</a>
       </li>
     </ul>
-    
+    <?php if(isAdmin() == 1):?>
+    <span class="navbar-text">     
+    <a class="nav-link" href="admin.php"><b>Admin</b> <span class="sr-only"></span></a>
+    </span>
+    <?php endif;?>
+
     <?php if(!isset($_SESSION['email'])) : ?>
       <span class="navbar-text">     
     <a class="nav-link" href="login.php">Prijavi se <span class="sr-only"></span></a>
     </span>
-    <?php elseif(isAdmin() == 1):?>
-    <span class="navbar-text">     
-    <a class="nav-link" href="admin.php"><b>Admin</b> <span class="sr-only"></span></a>
-    </span>
+   
    
     <?php else: ?>
       <span class="navbar-text">     
