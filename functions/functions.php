@@ -434,8 +434,8 @@ function get_user($id = NULL){
 
   }else
     {
-    $query = "SELECT * FROM korisnik WHERE email='" . $_SESSION['email'] . "'";
-    $result = query($query);
+      $query = "SELECT * FROM korisnik WHERE email='" . $_SESSION['email'] . "'";
+      $result = query($query);
     }
   if($result->num_rows > 0)
   {
