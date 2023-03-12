@@ -19,5 +19,8 @@ The main goal of this project is to create a web application that will allow use
 - Search and display all user accounts and review their information;
 - Set user permissions and roles for other admin or staff members.
 
+### Default Credentials
+Username: admin
+Password: admin123
 
 
