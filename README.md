@@ -2,11 +2,11 @@
 
 
 
-### About
+## About
 The main goal of this project is to create a web application that will allow users to easily pick a meal within their company. The web application is designed to be user-friendly and intuitive, with a focus on simplicity and ease of use.
 
 
-### Features 
+## Features 
 
 ### User Abilities:
 - Create a user account with personal information;
