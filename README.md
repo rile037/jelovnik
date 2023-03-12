@@ -1,4 +1,4 @@
-<p align="center" width="100%">![restaurant-2](https://user-images.githubusercontent.com/60843900/224552770-0d74e0ff-4da5-485e-8b36-897d2f7e2bcf.jpg)</p>
+![restaurant-2](https://user-images.githubusercontent.com/60843900/224552770-0d74e0ff-4da5-485e-8b36-897d2f7e2bcf.jpg)
 
 
 
