@@ -20,7 +20,7 @@ The main goal of this project is to create a web application that will allow use
 - Set user permissions and roles for other admin or staff members.
 
 ### Default Credentials
-Username: admin
+Username: admin<br>
 Password: admin123
 
 
