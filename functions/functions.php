@@ -20,6 +20,7 @@ function clear_message($message){
 
 
 function promeni_jelovnik(){
+  echo "test";
   $user = get_user();
     $user_id =$user['id_korisnika'];
     $sql = "SELECT * FROM jelovnik WHERE id_korisnika ='$user_id' ";
