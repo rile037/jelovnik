@@ -80,6 +80,7 @@ if($currentDate = $thisWeekDay){
   {
     promeni_jelovnik();
   }
+  
 }
 }
 

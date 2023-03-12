@@ -364,6 +364,9 @@ background-color: rgba(0,0,0,0.4);
   cursor: pointer;
 }
 @media (min-width:320px)  {/* smartphones, portrait iPhone, portrait 480x320 phones (Android) */ 
+  .col{
+    margin-bottom: 50px;
+  }
   #pretraga input{
     width: 250px;
   }
@@ -379,7 +382,6 @@ background-color: rgba(0,0,0,0.4);
   .container{
     width: auto;
     margin-left: 10px;
-    margin-right: 10px;
   }
   .main{
     height: auto;

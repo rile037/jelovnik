@@ -23,7 +23,7 @@ upisi_iduci_jelovnik();
 <div class="center">
   
 <div class='row'>
-  <div class='col' style='height: 1000px;'>
+  <div class='col'>
     <div class='center' style='margin-bottom: 7px;'>
     
 
@@ -98,7 +98,7 @@ upisi_iduci_jelovnik();
                     <?php get_tekuci_jelovnik(); ?>
               </div>
   </div>
-  <div class='col' style='height: 1000px;'>
+  <div class='col'>
   <div class='center' style='margin-bottom: 7px;'></div>
 
   <div class='container' style='height: auto;'>
