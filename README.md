@@ -1,4 +1,4 @@
-![restaurant](https://user-images.githubusercontent.com/60843900/224552629-1fa6983e-9f62-49d3-993d-798157d96ee9.png)
+![restaurant-2](https://user-images.githubusercontent.com/60843900/224552770-0d74e0ff-4da5-485e-8b36-897d2f7e2bcf.jpg)
 
 
 ### About
