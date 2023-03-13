@@ -66,21 +66,8 @@ function promeni_jelovnik(){
 
 function proveri_datum()
 {
-
-$currentDate = date("d.m.Y");
-$currentTime = date("H:i:s");
-
-$thisWeekDay = date("d.m.Y.", strtotime("sunday this week"));
-$thisWeekHour = date("H:i", strtotime("23:59"));
-$result =  date("d.m.Y H:i:s", strtotime($currentDate . $currentTime));
-
-if($currentDate = $thisWeekDay){
-
-  if ($currentTime > $thisWeekHour) 
-  {
-    promeni_jelovnik();
-  }
-  
+if(date('D') == 'Mon' && date('H:i') == '17:08') { 
+  promeni_jelovnik();
 }
 }
 
